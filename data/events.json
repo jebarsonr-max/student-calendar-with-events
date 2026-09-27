@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "title": "Data Structures Assignment",
+    "description": "Implement Binary Search Trees and AVL balance rotations in C. Submit via college portal.",
+    "date": "2026-09-28",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "venue": "CS Lab 3 / Online Submission",
+    "category": "Assignment",
+    "priority": "High",
+    "reminder": "1 hour before",
+    "isDeleted": 0
+  },
+  {
+    "id": 2,
+    "title": "AI & Machine Learning Workshop",
+    "description": "Hands-on session on Neural Networks and Transformer Architectures with industry experts.",
+    "date": "2026-09-29",
+    "startTime": "14:00",
+    "endTime": "16:30",
+    "venue": "Auditorium Hall B",
+    "category": "Workshop",
+    "priority": "Medium",
+    "reminder": "30 minutes before",
+    "isDeleted": 0
+  },
+  {
+    "id": 3,
+    "title": "Mathematics Internal Exam",
+    "description": "Semester Midterm covering Linear Algebra, Eigenvalues, and Fourier Series.",
+    "date": "2026-10-02",
+    "startTime": "09:00",
+    "endTime": "11:00",
+    "venue": "Examination Hall 104",
+    "category": "Exam",
+    "priority": "High",
+    "reminder": "1 day before",
+    "isDeleted": 0
+  },
+  {
+    "id": 4,
+    "title": "Capstone Project Review",
+    "description": "Demonstrate working prototype of Full-Stack Student Calendar with C Backend.",
+    "date": "2026-10-05",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "venue": "Faculty Conference Room",
+    "category": "Project",
+    "priority": "High",
+    "reminder": "1 hour before",
+    "isDeleted": 0
+  },
+  {
+    "id": 5,
+    "title": "Annual Tech Fest Inception",
+    "description": "Inauguration ceremony for annual inter-college hackathon and technical symposium.",
+    "date": "2026-10-10",
+    "startTime": "09:30",
+    "endTime": "13:00",
+    "venue": "Main Campus Arena",
+    "category": "College Event",
+    "priority": "Medium",
+    "reminder": "1 day before",
+    "isDeleted": 0
+  },
+  {
+    "id": 6,
+    "title": "Library Study Group",
+    "description": "Review Operating System concepts and Process Scheduling algorithms.",
+    "date": "2026-09-28",
+    "startTime": "15:00",
+    "endTime": "17:00",
+    "venue": "Central Library Floor 2",
+    "category": "Personal",
+    "priority": "Low",
+    "reminder": "10 minutes before",
+    "isDeleted": 0
+  },
+  {
+    "id": 7,
+    "title": "Network Security Lab Viva (Updated Venue)",
+    "description": "Prepare Packet Tracer topology and RSA encryption questions.",
+    "date": "2026-10-04",
+    "startTime": "11:00",
+    "endTime": "13:00",
+    "venue": "Auditorium Hall C",
+    "category": "Exam",
+    "priority": "High",
+    "reminder": "1 hour before",
+    "isDeleted": 1
+  }
+]

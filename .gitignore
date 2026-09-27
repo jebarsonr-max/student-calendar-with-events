@@ -1,0 +1,30 @@
+# Dependency directories
+node_modules/
+
+# Environment variable files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Compiled C binaries & objects
+c-core/*.exe
+c-core/*.o
+c-core/*.out
+c-core/calendar_core
+
+# Build and log artifacts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vercel
+.render
+dist/
+build/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp

@@ -1,0 +1,25 @@
+{
+  "name": "student-calendar-with-events",
+  "version": "1.0.0",
+  "description": "A modern full-stack academic student calendar with C-based core event processing engine",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "build:c": "gcc -Wall -Wextra -O2 c-core/calendar.c -o c-core/calendar_core.exe",
+    "c:cli": ".\\c-core\\calendar_core.exe --interactive"
+  },
+  "keywords": [
+    "student-calendar",
+    "c-programming",
+    "event-management",
+    "college-project",
+    "full-stack"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Calendar with Events | Academic Planner & C-Engine Logic</title>
+    <meta name="description" content="A modern student academic calendar and event management application powered by a robust C-programming core engine.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-icon">📅</div>
+            <div class="brand-info">
+                <span class="brand-title">Student Calendar</span>
+                <span class="brand-subtitle">Academic Planner</span>
+                <span class="c-badge">⚡ C-Core Engine</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#home" class="nav-link" data-nav="home" id="navHome">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Home</span>
+            </a>
+            <a href="#dashboard" class="nav-link" data-nav="dashboard" id="navDashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="#calendar" class="nav-link" data-nav="calendar" id="navCalendar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>Calendar</span>
+            </a>
+            <a href="#upcoming" class="nav-link" data-nav="upcoming" id="navUpcoming">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Upcoming Events</span>
+            </a>
+            <a href="#search" class="nav-link" data-nav="search" id="navSearch">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Search & Filter</span>
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="#settings" class="nav-link" data-nav="settings" id="navSettings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Settings & Viva Info</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="c-status-card">
+                <div class="c-status-header">
+                    <span>C Core Engine</span>
+                    <span class="status-dot" title="Active"></span>
+                </div>
+                <div class="c-status-desc">GCC Binary • File Persistence</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Top App Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <div class="header-date-badge">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span id="headerDateDisplay">Today</span>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Browser Notification Permission Toggle -->
+                <button class="btn-icon" id="notificationToggleBtn" title="Enable browser reminders">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </button>
+
+                <!-- Add Event Trigger -->
+                <button class="btn btn-primary" id="quickAddEventBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span>Add Event</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body Views -->
+        <main class="content-body">
+
+            <!-- ========================================================== -->
+            <!-- 1. LANDING / HOME PAGE VIEW                                -->
+            <!-- ========================================================== -->
+            <section id="view-home" class="page-view active">
+                <div class="hero-section">
+                    <div class="hero-tag">🎓 College Academic & Event Management</div>
+                    <h1 class="hero-title">Student Calendar with <span>C Core Engine</span></h1>
+                    <p class="hero-description">
+                        Plan your academic life, manage events, and never miss an important deadline. Built with a modern responsive UI backed by structured C event processing logic.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#calendar" class="btn btn-primary" data-nav="calendar" style="padding: 0.8rem 1.75rem; font-size: 1rem;">
+                            📅 Open Calendar
+                        </a>
+                        <a href="#dashboard" class="btn btn-secondary" data-nav="dashboard" style="padding: 0.8rem 1.75rem; font-size: 1rem;">
+                            📊 View Dashboard
+                        </a>
+                        <button class="btn btn-secondary" onclick="App.openAddModal()" style="padding: 0.8rem 1.75rem; font-size: 1rem;">
+                            ➕ Add New Event
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feature Cards Grid -->
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon-box">📅</div>
+                        <h3 class="feature-title">Calendar Management</h3>
+                        <p class="feature-desc">
+                            Dynamic monthly, weekly, and daily grids with interactive date navigation, today highlighting, and quick scheduling.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-box">⏰</div>
+                        <h3 class="feature-title">Event Reminders</h3>
+                        <p class="feature-desc">
+                            Configurable time alerts (10m, 30m, 1h, 1d) with graceful browser notifications and real-time in-app banners.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-box">🎯</div>
+                        <h3 class="feature-title">Academic Planning</h3>
+                        <p class="feature-desc">
+                            Dedicated trackers for Semester Exams, Lab Assignments, Project Deadlines, and Campus Workshops.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-box">🏷️</div>
+                        <h3 class="feature-title">Event Categories</h3>
+                        <p class="feature-desc">
+                            Color-coded categorization (Exam, Assignment, Workshop, Project, College Event, Personal) with quick filtering.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-box">⚡</div>
+                        <h3 class="feature-title">C Conflict Detection</h3>
+                        <p class="feature-desc">
+                            Pure C algorithm checks overlapping time intervals on identical dates to prevent accidental double-booking.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-box">💾</div>
+                        <h3 class="feature-title">Binary Data Persistence</h3>
+                        <p class="feature-desc">
+                            File persistence handled directly via C standard I/O (fread/fwrite) ensuring reliable data retention.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- 2. DASHBOARD VIEW                                          -->
+            <!-- ========================================================== -->
+            <section id="view-dashboard" class="page-view">
+                <div class="dashboard-header">
+                    <div>
+                        <h2 class="page-title">Student Dashboard</h2>
+                        <p class="page-subtitle">Overview of your academic schedule, deadlines, and weekly workload</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="App.openAddModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Schedule Event
+                    </button>
+                </div>
+
+                <!-- 5 Dashboard Stat Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Total Events</span>
+                            <span class="stat-value" id="statTotalEvents">0</span>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(37, 99, 235, 0.1); color: var(--primary);">📋</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Today's Events</span>
+                            <span class="stat-value" id="statTodayEvents">0</span>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">📅</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Upcoming</span>
+                            <span class="stat-value" id="statUpcomingEvents">0</span>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">🚀</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Exams</span>
+                            <span class="stat-value" id="statExams" style="color: var(--cat-exam);">0</span>
+                        </div>
+                        <div class="stat-icon" style="background: var(--cat-exam-bg); color: var(--cat-exam);">📝</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Assignments</span>
+                            <span class="stat-value" id="statAssignments" style="color: var(--cat-assignment);">0</span>
+                        </div>
+                        <div class="stat-icon" style="background: var(--cat-assignment-bg); color: var(--cat-assignment);">💻</div>
+                    </div>
+                </div>
+
+                <!-- Split Dashboard Content -->
+                <div class="dashboard-grid-split">
+                    <!-- Left: Weekly Overview Chart & Today's Schedule -->
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <!-- Weekly Distribution Chart -->
+                        <div class="dashboard-card">
+                            <div class="card-header-flex">
+                                <h3 class="card-title">Weekly Event Distribution</h3>
+                                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Events by Day</span>
+                            </div>
+                            
+                            <div class="weekly-bars-container">
+                                <div class="day-bar-col">
+                                    <div class="day-bar-track">
+                                        <div class="day-bar-fill" id="barFill_sun" style="height: 10%;"></div>
+                                    </div>
+                                    <span class="day-bar-count" id="barCount_sun">0</span>
+                                    <span class="day-bar-label">Sun</span>
+                                </div>
+                                <div class="day-bar-col">
+                                    <div class="day-bar-track">
+                                        <div class="day-bar-fill" id="barFill_mon" style="height: 10%;"></div>
+                                    </div>
+                                    <span class="day-bar-count" id="barCount_mon">0</span>
+                                    <span class="day-bar-label">Mon</span>
+                                </div>
+                                <div class="day-bar-col">
+                                    <div class="day-bar-track">
+                                        <div class="day-bar-fill" id="barFill_tue" style="height: 10%;"></div>
+                                    </div>
+                                    <span class="day-bar-count" id="barCount_tue">0</span>
+                                    <span class="day-bar-label">Tue</span>
+                                </div>
+                                <div class="day-bar-col">
+                                    <div class="day-bar-track">
+                                        <div class="day-bar-fill" id="barFill_wed" style="height: 10%;"></div>
+                                    </div>
+                                    <span class="day-bar-count" id="barCount_wed">0</span>
+                                    <span class="day-bar-label">Wed</span>
+                                </div>
+                                <div class="day-bar-col">
+                                    <div class="day-bar-track">
+                                        <div class="day-bar-fill" id="barFill_thu" style="height: 10%;"></div>
+                                    </div>
+                                    <span class="day-bar-count" id="barCount_thu">0</span>
+                                    <span class="day-bar-label">Thu</span>
+                                </div>
+                                <div class="day-bar-col">
+                                    <div class="day-bar-track">
+                                        <div class="day-bar-fill" id="barFill_fri" style="height: 10%;"></div>
+                                    </div>
+                                    <span class="day-bar-count" id="barCount_fri">0</span>
+                                    <span class="day-bar-label">Fri</span>
+                                </div>
+                                <div class="day-bar-col">
+                                    <div class="day-bar-track">
+                                        <div class="day-bar-fill" id="barFill_sat" style="height: 10%;"></div>
+                                    </div>
+                                    <span class="day-bar-count" id="barCount_sat">0</span>
+                                    <span class="day-bar-label">Sat</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Today's Events List -->
+                        <div class="dashboard-card">
+                            <div class="card-header-flex">
+                                <h3 class="card-title">Today's Schedule</h3>
+                                <a href="#calendar" data-nav="calendar" style="font-size: 0.8rem; color: var(--primary); font-weight: 600;">View in Calendar →</a>
+                            </div>
+                            <div class="event-mini-list" id="dashboardTodayList">
+                                <!-- Dynamic Today's Events -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Imminent Deadlines -->
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">Imminent Deadlines</h3>
+                            <span class="badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">High Priority</span>
+                        </div>
+                        <div class="event-mini-list" id="dashboardDeadlinesList">
+                            <!-- Dynamic Upcoming High-Priority & Exam Events -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- 3. CALENDAR VIEW                                           -->
+            <!-- ========================================================== -->
+            <section id="view-calendar" class="page-view">
+                <div class="calendar-wrapper">
+                    <div class="calendar-top-bar">
+                        <div class="calendar-nav-controls">
+                            <h2 class="calendar-month-heading" id="calendarMonthTitle">October 2026</h2>
+                            <button class="btn-icon" id="calPrevBtn" title="Previous">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </button>
+                            <button class="btn btn-secondary" id="calTodayBtn" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">Today</button>
+                            <button class="btn-icon" id="calNextBtn" title="Next">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="view-mode-toggle">
+                            <button class="view-toggle-btn active" data-view="month">Month</button>
+                            <button class="view-toggle-btn" data-view="week">Week</button>
+                            <button class="view-toggle-btn" data-view="day">Day</button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Calendar Grid Container -->
+                    <div id="calendarGridContainer"></div>
+                </div>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- 4. UPCOMING EVENTS VIEW                                    -->
+            <!-- ========================================================== -->
+            <section id="view-upcoming" class="page-view">
+                <div class="dashboard-header">
+                    <div>
+                        <h2 class="page-title">Upcoming Events</h2>
+                        <p class="page-subtitle">Chronologically organized schedule of all forthcoming classes, tests, and events</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="App.openAddModal()">➕ Add Event</button>
+                </div>
+
+                <div class="upcoming-container">
+                    <!-- Filter Pills Bar -->
+                    <div class="filter-bar">
+                        <div class="filter-pills-row">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-right: 0.25rem;">Category:</span>
+                            <button class="filter-pill active" data-cat-filter="All">All</button>
+                            <button class="filter-pill" data-cat-filter="Exam">Exams</button>
+                            <button class="filter-pill" data-cat-filter="Assignment">Assignments</button>
+                            <button class="filter-pill" data-cat-filter="Workshop">Workshops</button>
+                            <button class="filter-pill" data-cat-filter="Project">Projects</button>
+                            <button class="filter-pill" data-cat-filter="College Event">College Events</button>
+                            <button class="filter-pill" data-cat-filter="Personal">Personal</button>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">Priority:</span>
+                            <select class="form-select" id="upcomingPriorityFilter" style="width: 130px; padding: 0.4rem 0.6rem;">
+                                <option value="All">All</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Chronological Timeline Container (Today, Tomorrow, This Week, Later) -->
+                    <div id="upcomingTimelineContainer"></div>
+                </div>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- 5. SEARCH AND FILTER VIEW                                  -->
+            <!-- ========================================================== -->
+            <section id="view-search" class="page-view">
+                <div class="dashboard-header">
+                    <div>
+                        <h2 class="page-title">Search & Filter Events</h2>
+                        <p class="page-subtitle">Query events by title, description, category, venue, priority, or date</p>
+                    </div>
+                </div>
+
+                <div class="search-controls-box">
+                    <div class="search-input-wrapper">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" class="search-input" id="searchKeywordInput" placeholder="Search events by title, keywords, classroom venue, or description...">
+                    </div>
+
+                    <div class="filters-row">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" id="searchCategorySelect">
+                                <option value="All">All Categories</option>
+                                <option value="Exam">Exam</option>
+                                <option value="Assignment">Assignment</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Project">Project</option>
+                                <option value="College Event">College Event</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Priority</label>
+                            <select class="form-select" id="searchPrioritySelect">
+                                <option value="All">All Priorities</option>
+                                <option value="High">High Priority</option>
+                                <option value="Medium">Medium Priority</option>
+                                <option value="Low">Low Priority</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Specific Date</label>
+                            <input type="date" class="form-input" id="searchDateInput">
+                        </div>
+
+                        <div class="form-group" style="justify-content: flex-end;">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-secondary" id="searchResetBtn">Clear Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                    <span id="searchResultCount" style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);">Searching...</span>
+                </div>
+
+                <div id="searchResultsContainer"></div>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- 6. SETTINGS & VIVA ARCHITECTURE INSPECTOR VIEW             -->
+            <!-- ========================================================== -->
+            <section id="view-settings" class="page-view">
+                <div class="dashboard-header">
+                    <div>
+                        <h2 class="page-title">System Settings & Viva Architecture</h2>
+                        <p class="page-subtitle">Demonstrate and inspect the C-Core binary execution and data persistence</p>
+                    </div>
+                    <button class="btn btn-secondary" id="vivaSeedBtn">🔄 Reset Sample Data</button>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- C Core Architecture Card -->
+                    <div class="dashboard-card">
+                        <h3 class="card-title">C Core Engine Overview</h3>
+                        <div id="vivaEngineDetails" style="font-size: 0.9rem; line-height: 1.8; color: var(--text-muted);">
+                            Loading C Engine details...
+                        </div>
+                    </div>
+
+                    <!-- Live C CLI Execution Log -->
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">Live C Binary Process Stream</h3>
+                            <span class="badge" style="background: rgba(14, 165, 233, 0.1); color: #0284c7;">Real-Time Child Process Execution</span>
+                        </div>
+                        <div class="code-box" id="vivaExecutionLogs" style="max-height: 220px; overflow-y: auto;">
+                            Waiting for C engine calls...
+                        </div>
+                    </div>
+
+                    <!-- C Struct & Viva Explanation -->
+                    <div class="dashboard-card">
+                        <h3 class="card-title">C Data Structures & Viva Quick Reference</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            Key concepts used in <code>c-core/calendar.c</code> to explain during your project viva:
+                        </p>
+                        <pre class="code-box"><code>typedef struct {
+    int id;                         /* Unique event identifier */
+    char title[100];                /* Event title */
+    char description[300];          /* Detailed description */
+    char date[20];                  /* YYYY-MM-DD */
+    char startTime[10];             /* HH:MM */
+    char endTime[10];               /* HH:MM */
+    char venue[100];                /* Location / Room */
+    char category[50];              /* Exam, Assignment, Workshop, etc. */
+    char priority[20];              /* High, Medium, Low */
+    char reminder[30];              /* Alert duration */
+    int isDeleted;                  /* Soft delete flag */
+} Event;
+
+/* Functions Implemented in C: */
+- addEvent(), updateEvent(), deleteEvent(), getEventById()
+- checkConflict(): Overlap check S1 < E2 &amp;&amp; S2 < E1
+- sortEventsByDateTime(): Ascending sorting using qsort()
+- searchEvents(): Case-insensitive substring matching
+- loadEvents() / saveEvents(): Binary file I/O with data/events.dat
+- calculateStats(): Dynamic dashboard aggregation &amp; day-of-week math</code></pre>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<!-- ========================================================== -->
+<!-- MODALS                                                     -->
+<!-- ========================================================== -->
+
+<!-- Add / Edit Event Modal -->
+<div class="modal-overlay" id="modalEventForm">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalEventFormTitle">Create New Event</h3>
+            <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+        </div>
+        <form id="addEventForm">
+            <div class="modal-body">
+                <!-- Conflict Warning Alert Box -->
+                <div class="conflict-alert-box" id="eventConflictAlert"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Event Title <span class="req">*</span></label>
+                    <input type="text" class="form-input" id="eventTitle" placeholder="e.g. Data Structures Assignment" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input form-textarea" id="eventDescription" placeholder="Add assignment details, syllabus chapters, meeting notes, etc."></textarea>
+                </div>
+
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label class="form-label">Date <span class="req">*</span></label>
+                        <input type="date" class="form-input" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Time <span class="req">*</span></label>
+                        <input type="time" class="form-input" id="eventStartTime" value="10:00" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Time <span class="req">*</span></label>
+                        <input type="time" class="form-input" id="eventEndTime" value="11:00" required>
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Venue / Location</label>
+                        <input type="text" class="form-input" id="eventVenue" placeholder="e.g. CS Lab 3 / Room 204 / Zoom">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="eventCategory">
+                            <option value="Exam">Exam</option>
+                            <option value="Assignment">Assignment</option>
+                            <option value="College Event">College Event</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Project">Project</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="form-select" id="eventPriority">
+                            <option value="High">High</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Reminder</label>
+                        <select class="form-select" id="eventReminder">
+                            <option value="None">None</option>
+                            <option value="10 minutes before">10 minutes before</option>
+                            <option value="30 minutes before">30 minutes before</option>
+                            <option value="1 hour before" selected>1 hour before</option>
+                            <option value="1 day before">1 day before</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-cancel-btn">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="saveEventSubmitBtn">Save Event</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Event Details Modal -->
+<div class="modal-overlay" id="modalEventDetails">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span id="detailsCategory" class="badge">Exam</span>
+                <span id="detailsPriority" class="badge" style="background: var(--bg-app); border: 1px solid var(--border-color);">High Priority</span>
+            </div>
+            <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <h2 id="detailsTitle" style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Event Title</h2>
+            <p id="detailsDescription" style="font-size: 0.925rem; color: var(--text-muted); line-height: 1.6; white-space: pre-line;"></p>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; background: var(--bg-app); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                <div class="meta-row">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <strong>Date:</strong> <span id="detailsDate">2026-09-28</span>
+                </div>
+                <div class="meta-row">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <strong>Time:</strong> <span id="detailsTime">10:00 - 12:00</span>
+                </div>
+                <div class="meta-row">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <strong>Venue:</strong> <span id="detailsVenue">Campus</span>
+                </div>
+                <div class="meta-row">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <strong>Reminder:</strong> <span id="detailsReminder">1 hour before</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-cancel-btn">Close</button>
+            <button type="button" class="btn btn-secondary" id="detailsEditBtn">Edit Event</button>
+            <button type="button" class="btn btn-danger" id="detailsDeleteBtn">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="modalConfirmDelete">
+    <div class="modal-dialog" style="max-width: 420px;">
+        <div class="modal-header">
+            <h3 class="modal-title" style="color: #ef4444;">Delete Event?</h3>
+            <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size: 0.925rem; color: var(--text-main);">
+                Are you sure you want to delete <span id="deleteTargetTitle" style="font-weight: 700;">this event</span>?
+            </p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+                This will soft-delete the record from the C binary database.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-cancel-btn">Cancel</button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notifications Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- JavaScript Application Scripts -->
+<script src="js/events.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: student-calendar-with-events
+    env: node
+    plan: free
+    buildCommand: gcc -Wall -Wextra -O2 c-core/calendar.c -o c-core/calendar_core && npm install
+    startCommand: node backend/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
