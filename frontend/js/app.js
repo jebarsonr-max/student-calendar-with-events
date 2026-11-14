@@ -671,61 +671,78 @@ const App = {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const title = document.getElementById('eventTitle')?.value.trim();
-            const description = document.getElementById('eventDescription')?.value.trim();
-            const date = document.getElementById('eventDate')?.value;
-            const startTime = document.getElementById('eventStartTime')?.value;
-            const endTime = document.getElementById('eventEndTime')?.value;
-            const venue = document.getElementById('eventVenue')?.value.trim() || 'Campus';
-            const category = document.getElementById('eventCategory')?.value;
-            const priority = document.getElementById('eventPriority')?.value;
-            const reminder = document.getElementById('eventReminder')?.value;
-
-            // Validation
-            if (!title) {
-                this.showToast('Please enter an event title', 'error');
-                return;
-            }
-            if (!date) {
-                this.showToast('Please select a valid date', 'error');
-                return;
-            }
-            if (!startTime || !endTime) {
-                this.showToast('Please specify start and end times', 'error');
-                return;
-            }
-            if (startTime >= endTime) {
-                this.showToast('End time must be later than start time', 'error');
-                return;
+            const submitBtn = document.getElementById('saveEventSubmitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Saving...';
             }
 
-            const payload = {
-                title,
-                description,
-                date,
-                startTime,
-                endTime,
-                venue,
-                category,
-                priority,
-                reminder
-            };
+            try {
+                const title = document.getElementById('eventTitle')?.value.trim();
+                const description = document.getElementById('eventDescription')?.value.trim();
+                const date = document.getElementById('eventDate')?.value;
+                const startTime = document.getElementById('eventStartTime')?.value;
+                const endTime = document.getElementById('eventEndTime')?.value;
+                const venue = document.getElementById('eventVenue')?.value.trim() || 'Campus';
+                const category = document.getElementById('eventCategory')?.value;
+                const priority = document.getElementById('eventPriority')?.value;
+                const reminder = document.getElementById('eventReminder')?.value;
 
-            let res;
-            if (this.editingEventId) {
-                res = await EventsAPI.updateEvent(this.editingEventId, payload, true);
-            } else {
-                res = await EventsAPI.addEvent(payload, true);
-            }
+                // Validation
+                if (!title) {
+                    this.showToast('Please enter an event title', 'error');
+                    return;
+                }
+                if (!date) {
+                    this.showToast('Please select a valid date', 'error');
+                    return;
+                }
+                if (!startTime || !endTime) {
+                    this.showToast('Please specify start and end times', 'error');
+                    return;
+                }
+                if (startTime >= endTime) {
+                    this.showToast('End time must be later than start time', 'error');
+                    return;
+                }
 
-            if (res.status === 200 || res.status === 201) {
-                this.showToast(this.editingEventId ? 'Event updated successfully' : 'Event scheduled successfully', 'success');
-                this.closeModal('modalEventForm');
-                await this.refreshAllData();
-            } else if (res.status === 409) {
-                this.showToast('Schedule conflict detected!', 'warning');
-            } else {
-                this.showToast(res.data?.error || 'Failed to save event', 'error');
+                const payload = {
+                    title,
+                    description,
+                    date,
+                    startTime,
+                    endTime,
+                    venue,
+                    category,
+                    priority,
+                    reminder
+                };
+
+                let res;
+                if (this.editingEventId) {
+                    res = await EventsAPI.updateEvent(this.editingEventId, payload, true);
+                } else {
+                    res = await EventsAPI.addEvent(payload, true);
+                }
+
+                if (res && (res.status === 200 || res.status === 201)) {
+                    const modeNotice = res.isLocal ? ' (Saved locally)' : '';
+                    this.showToast((this.editingEventId ? 'Event updated successfully' : 'Event scheduled successfully') + modeNotice, 'success');
+                    this.closeModal('modalEventForm');
+                    await this.refreshAllData();
+                } else if (res && res.status === 409) {
+                    this.showToast('Schedule conflict detected!', 'warning');
+                } else {
+                    this.showToast(res?.data?.error || 'Failed to save event', 'error');
+                }
+            } catch (err) {
+                console.error('[App] Save event exception:', err);
+                this.showToast('Failed to save event: ' + (err.message || 'Unknown error'), 'error');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Save Event';
+                }
             }
         });
     },

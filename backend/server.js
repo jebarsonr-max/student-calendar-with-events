@@ -115,6 +115,19 @@ const SAMPLE_EVENTS = [
         priority: "Low",
         reminder: "10 minutes before",
         isDeleted: 0
+    },
+    {
+        id: 7,
+        title: "DSD",
+        description: "class",
+        date: "2026-11-14",
+        startTime: "14:00",
+        endTime: "23:00",
+        venue: "CLASS 1",
+        category: "Exam",
+        priority: "Medium",
+        reminder: "1 hour before",
+        isDeleted: 0
     }
 ];
 
@@ -137,6 +150,36 @@ function readStoredEvents() {
 
 function writeStoredEvents(events) {
     fs.writeFileSync(DATA_JSON_FILE, JSON.stringify(events, null, 2), 'utf-8');
+    syncBinaryDatFile(events);
+}
+
+/**
+ * Synchronize binary data/events.dat struct file with current events
+ * struct Event size: 648 bytes (packed C struct)
+ */
+function syncBinaryDatFile(events) {
+    try {
+        const RECORD_SIZE = 648;
+        const buf = Buffer.alloc(events.length * RECORD_SIZE);
+        events.forEach((e, idx) => {
+            const offset = idx * RECORD_SIZE;
+            buf.writeInt32LE(e.id || 0, offset);
+            buf.write(e.title || '', offset + 4, 99, 'utf8');
+            buf.write(e.description || '', offset + 104, 299, 'utf8');
+            buf.write(e.date || '', offset + 404, 19, 'utf8');
+            buf.write(e.startTime || '', offset + 424, 9, 'utf8');
+            buf.write(e.endTime || '', offset + 434, 9, 'utf8');
+            buf.write(e.venue || '', offset + 444, 99, 'utf8');
+            buf.write(e.category || '', offset + 544, 49, 'utf8');
+            buf.write(e.priority || '', offset + 594, 19, 'utf8');
+            buf.write(e.reminder || '', offset + 614, 29, 'utf8');
+            buf.writeInt32LE(e.isDeleted ? 1 : 0, offset + 644);
+        });
+        const datFile = path.join(DATA_DIR, 'events.dat');
+        fs.writeFileSync(datFile, buf);
+    } catch (err) {
+        // non-blocking fallback
+    }
 }
 
 /**

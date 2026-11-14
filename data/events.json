@@ -79,6 +79,19 @@
   },
   {
     "id": 7,
+    "title": "DSD",
+    "description": "class",
+    "date": "2026-11-14",
+    "startTime": "14:00",
+    "endTime": "23:00",
+    "venue": "CLASS 1",
+    "category": "Exam",
+    "priority": "Medium",
+    "reminder": "1 hour before",
+    "isDeleted": 0
+  },
+  {
+    "id": 8,
     "title": "Network Security Lab Viva (Updated Venue)",
     "description": "Prepare Packet Tracer topology and RSA encryption questions.",
     "date": "2026-10-04",
